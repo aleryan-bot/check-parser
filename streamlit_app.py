@@ -85,8 +85,22 @@ Return ONLY a valid JSON object with NO other text, NO markdown, NO explanation:
 {"Payer": "", "Date": "", "Amount": 0.00, "Bank": "", "Check_Number": "", "Account": "", "Routing": "", "Claim": ""}"""
 
 
+def auto_rotate_check(img):
+    """Auto-rotate check images to landscape orientation.
+    Standard checks are wider than tall. If an image comes out
+    portrait (taller than wide), it was scanned sideways and
+    needs to be rotated to landscape."""
+    width, height = img.size
+    if height > width:
+        # Image is portrait — rotate 90° counterclockwise to landscape
+        img = img.transpose(Image.ROTATE_90)
+    return img
+
+
 def enhance_image(img):
     """Enhance scanned check image for better OCR accuracy."""
+    # Auto-rotate to landscape first
+    img = auto_rotate_check(img)
     # Convert to RGB if needed
     if img.mode != "RGB":
         img = img.convert("RGB")
