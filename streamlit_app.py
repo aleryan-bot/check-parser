@@ -88,7 +88,7 @@ def get_images_from_uploads(files):
 def parse_check(client, img_b64, media_type):
     """Send a single check image to Claude and get structured data back."""
     response = client.messages.create(
-        model="claude-sonnet-4-5-20250514",
+        model="claude-sonnet-4-5-20250929",
         max_tokens=1024,
         messages=[{
             "role": "user",
