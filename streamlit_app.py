@@ -17,10 +17,15 @@ from PIL import Image, ImageEnhance, ImageFilter
 # ─── Page config ───
 st.set_page_config(page_title="Check Parser", page_icon="🏦", layout="centered")
 
-# ─── Sidebar: API key ───
+# ─── API Key: use Streamlit secrets if available, otherwise show input ───
+api_key = st.secrets.get("ANTHROPIC_API_KEY", "")
+
 with st.sidebar:
     st.header("Settings")
-    api_key = st.text_input("Anthropic API Key", type="password", help="Get yours at console.anthropic.com → API Keys")
+    if not api_key:
+        api_key = st.text_input("Anthropic API Key", type="password", help="Get yours at console.anthropic.com → API Keys")
+    else:
+        st.success("API key loaded from secrets")
     st.markdown("---")
     st.caption("Check Parser v2.0")
     st.caption("Powered by Claude AI")
